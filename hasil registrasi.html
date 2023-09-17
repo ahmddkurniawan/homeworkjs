@@ -5,7 +5,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('programmer.jpg'); /* Ganti 'background.jpg' dengan URL gambar latar belakang Anda */
+            background-image: url('programmer.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -22,7 +22,7 @@
         .tab-container {
             width: 80%;
             margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.9); /* Latar belakang putih transparan */
+            background-color: rgba(255, 255, 255, 0.9); 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -48,13 +48,11 @@
             background-color: #0056b3;
         }
 
-        /* Gaya tab aktif */
         .tab-content {
             display: none;
             padding: 20px;
         }
 
-        /* Gaya tab aktif */
         .active-tab {
             display: block;
         }
@@ -85,14 +83,13 @@
             color: #fff;
             cursor: pointer;
             display: block;
-            margin: 10px auto; /* Memindahkan tombol ke tengah */
+            margin: 10px auto; 
         }
 
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
 
-        /* Gaya tabel */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -113,7 +110,6 @@
             background-color: #f2f2f2;
         }
 
-        /* Gaya resume */
         #resume {
             text-align: center;
             margin-top: 20px;
@@ -170,7 +166,7 @@
     </div>
 
     <script>
-        var pendaftar = []; // Array untuk menyimpan data pendaftar
+        var pendaftar = []; 
 
         function openTab(tabName) {
             var tabs = document.getElementsByClassName("tab");
@@ -195,7 +191,6 @@
                 return false;
             }
 
-            // Menyimpan data pendaftar
             pendaftar.push({ nama: nama, umur: umur, uangSaku: uangSaku });
             alert("Data pendaftar berhasil disimpan!");
             document.getElementById("nama").value = "";
@@ -231,8 +226,8 @@
                 deleteButton.innerText = "Delete";
                 deleteButton.onclick = function() {
                     var rowIndex = this.parentElement.parentElement.rowIndex;
-                    pendaftar.splice(rowIndex - 1, 1); // Menghapus data dari array
-                    displayPendaftar(); // Menampilkan ulang data
+                    pendaftar.splice(rowIndex - 1, 1); 
+                    displayPendaftar(); 
                 };
                 cellAction.appendChild(deleteButton);
                 row.appendChild(cellAction);
