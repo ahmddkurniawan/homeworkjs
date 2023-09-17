@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrasi dan List Pendaftar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('programmer.jpg'); /* Ganti 'background.jpg' dengan URL gambar latar belakang Anda */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Gaya tab */
+        .tab-container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.9); /* Latar belakang putih transparan */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .tab-buttons {
+            text-align: center;
+            background-color: #007BFF;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tab-buttons button {
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .tab-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Gaya tab aktif */
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        /* Gaya tab aktif */
+        .active-tab {
+            display: block;
+        }
+
+        /* Gaya form */
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto; /* Memindahkan tombol ke tengah */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Gaya tabel */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Gaya resume */
+        #resume {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registrasi dan List Pendaftar</h1>
+
+    <!-- Tab Container -->
+    <div class="tab-container">
+        <!-- Tombol tab -->
+        <div class="tab-buttons">
+            <button onclick="openTab('registrasi')">Registrasi</button>
+            <button onclick="openTab('list'); displayPendaftar()">List Pendaftar</button>
+        </div>
+
+        <!-- Tab Registrasi -->
+        <div id="registrasi" class="tab-content active-tab">
+            <h2>Form Registrasi</h2>
+            <form onsubmit="return validateForm()">
+                <label for="nama">Nama (minimal 10 karakter):</label>
+                <input type="text" id="nama" name="nama" required minlength="10"><br><br>
+                
+                <label for="umur">Umur (minimal 25 tahun):</label>
+                <input type="number" id="umur" name="umur" required min="25"><br><br>
+                
+                <label for="uangSaku">Uang Saku (minimal 100 ribu dan maksimal 1 juta):</label>
+                <input type="number" id="uangSaku" name="uangSaku" required min="100000" max="1000000"><br><br>
+
+                <input type="submit" value="Simpan">
+            </form>
+        </div>
+
+        <!-- Tab List Pendaftar -->
+        <div id="list" class="tab-content">
+            <h2>List Pendaftar</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Umur</th>
+                        <th>Uang Saku</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="dataPendaftar">
+                    <!-- Data pendaftar akan ditampilkan di sini -->
+                </tbody>
+            </table>
+            <p id="resume"></p>
+        </div>
+    </div>
+
+    <script>
+        var pendaftar = []; // Array untuk menyimpan data pendaftar
+
+        function openTab(tabName) {
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active-tab");
+            }
+            document.getElementById(tabName).classList.add("active-tab");
+
+            if (tabName === "list") {
+                // Menampilkan data pendaftar di tab List Pendaftar
+                displayPendaftar();
+            }
+        }
+
+        function validateForm() {
+            var nama = document.getElementById("nama").value;
+            var umur = document.getElementById("umur").value;
+            var uangSaku = document.getElementById("uangSaku").value;
+
+            if (nama.length < 10 || umur < 25 || uangSaku < 100000 || uangSaku > 1000000) {
+                alert("Silakan periksa kembali data yang Anda masukkan.");
+                return false;
+            }
+
+            // Menyimpan data pendaftar
+            pendaftar.push({ nama: nama, umur: umur, uangSaku: uangSaku });
+            alert("Data pendaftar berhasil disimpan!");
+            document.getElementById("nama").value = "";
+            document.getElementById("umur").value = "";
+            document.getElementById("uangSaku").value = "";
+
+            return false;
+        }
+
+        function displayPendaftar() {
+            var dataPendaftar = document.getElementById("dataPendaftar");
+            dataPendaftar.innerHTML = "";
+
+            var totalUangSaku = 0;
+            var totalUmur = 0;
+
+            for (var i = 0; i < pendaftar.length; i++) {
+                var row = document.createElement("tr");
+                var cellNama = document.createElement("td");
+                cellNama.innerText = pendaftar[i].nama;
+                row.appendChild(cellNama);
+
+                var cellUmur = document.createElement("td");
+                cellUmur.innerText = pendaftar[i].umur;
+                row.appendChild(cellUmur);
+
+                var cellUangSaku = document.createElement("td");
+                cellUangSaku.innerText = pendaftar[i].uangSaku;
+                row.appendChild(cellUangSaku);
+
+                var cellAction = document.createElement("td");
+                var deleteButton = document.createElement("button");
+                deleteButton.innerText = "Delete";
+                deleteButton.onclick = function() {
+                    var rowIndex = this.parentElement.parentElement.rowIndex;
+                    pendaftar.splice(rowIndex - 1, 1); // Menghapus data dari array
+                    displayPendaftar(); // Menampilkan ulang data
+                };
+                cellAction.appendChild(deleteButton);
+                row.appendChild(cellAction);
+
+                totalUangSaku += parseInt(pendaftar[i].uangSaku);
+                totalUmur += parseInt(pendaftar[i].umur);
+
+                dataPendaftar.appendChild(row);
+            }
+
+            var rataRataUangSaku = totalUangSaku / pendaftar.length;
+            var rataRataUmur = totalUmur / pendaftar.length;
+
+            var resume = document.getElementById("resume");
+            resume.innerHTML = "Rata-rata pendaftar memiliki uang saku sebesar " + rataRataUangSaku.toFixed(2) + " dengan rata-rata umur " + rataRataUmur.toFixed(2);
+        }
+    </script>
+</body>
+</html>
